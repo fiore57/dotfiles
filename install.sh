@@ -23,7 +23,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # === 3. Brewツールの一括インストール ===
 echo "ℹ️ Installing CLI tools via Brew..."
 # 既にインストール済みの場合はスキップされる
-brew install fish gh tmux neovim bat eza fd git-delta ripgrep rm-improved fzf zoxide
+brew install fish gh neovim bat eza fd git-delta ripgrep fzf zoxide
 
 # === 4. GitHub認証 & SSH設定 ===
 if ! gh auth status &> /dev/null; then
@@ -36,9 +36,13 @@ if [ ! -f "$HOME/.ssh/id_ed25519" ]; then
     ssh-keygen -t ed25519 -N "" -f "$HOME/.ssh/id_ed25519"
     gh ssh-key add "$HOME/.ssh/id_ed25519.pub" --title "WSL-Ubuntu-$(date +%Y%m%d)"
 fi
-# リモートURLをSSHに切り替え
-# cd "$HOME/dotfiles"
-# git remote set-url origin git@github.com:fiore57/dotfiles.git
+# HTTPSのリモートURLをSSH形式に書き換える
+cd "$DOTFILES_DIR"
+current_url=$(git remote get-url origin)
+if [[ $current_url == https://github.com/* ]]; then
+    new_url=$(echo $current_url | sed 's|https://github.com/|git@github.com:|')
+    git remote set-url origin "$new_url"
+fi
 
 # === 5. 設定ファイルのリンク作成 ===
 echo "ℹ️ Creating symlinks..."
