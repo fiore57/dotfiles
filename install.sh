@@ -23,7 +23,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # === 3. Brewツールの一括インストール ===
 echo "ℹ️ Installing CLI tools via Brew..."
 # 既にインストール済みの場合はスキップされる
-brew install fish gh tmux neovim bat eza fd git-delta ripgrep rm-improved fzf
+brew install fish gh tmux neovim bat eza fd git-delta ripgrep rm-improved fzf zoxide
 
 # === 4. GitHub認証 & SSH設定 ===
 if ! gh auth status &> /dev/null; then
