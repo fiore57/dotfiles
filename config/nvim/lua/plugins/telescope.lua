@@ -22,6 +22,13 @@ return {
       sorting_strategy = "ascending",               -- 検索結果を上から順に並べる
       layout_config = { prompt_position = "top" },  -- 上に検索窓を置く
       winblend = 0,                                 -- 背景を透明に
+      mappings = {
+        i = {
+          ["<ESC>"] = function(...)
+            return require("telescope.actions").close(...)
+          end,
+        },
+      }
     }
   },
 }
