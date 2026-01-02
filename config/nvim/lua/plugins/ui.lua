@@ -13,5 +13,11 @@ return {
         floats = "transparent",
       }
     },
+  },
+  {
+    "vim-jp/vimdoc-ja",
+    config = function()
+      vim.opt.helplang = "ja,en"
+    end
   }
 }
