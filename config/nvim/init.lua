@@ -1,9 +1,8 @@
-local opt = vim.opt
-local keymap = vim.keymap
-
 ---
 --- 基本設定
 ---
+
+local opt = vim.opt
 
 opt.swapfile = false -- スワップファイルを作らない
 opt.undofile = true -- neovimを一度閉じても、uで戻せる
@@ -49,7 +48,7 @@ opt.winblend = 10 -- プラグインが表示するフローティングウィ�
 vim.g.mapleader = " " -- <Leader>をスペースキーに割り当てる
 
 local function map(mode, lhs, rhs, desc)
-  keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
+  vim.keymap.set(mode, lhs, rhs, { silent = true, desc = desc })
 end
 
 map("i", "kj", "<Esc>", "挿入モードを抜ける")
@@ -85,3 +84,30 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     vim.highlight.on_yank({ higroup = "Visual", timeout = 200 })
   end,
 })
+
+---
+--- プラグイン
+---
+
+-- lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.uv.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  spec = {
+    -- lua/plugins/ ディレクトリ内のファイルを全て読み込む
+    { import = "plugins" },
+  },
+  checker = { enabled = true },
+})
+
