@@ -22,8 +22,22 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # === 3. Brewツールの一括インストール ===
 echo "ℹ️ Installing CLI tools via Brew..."
+# インストールするツールのリスト
+CORE_TOOLS=(
+  fish        # シェル
+  neovim      # エディタ
+  gh          # GitHub CLI
+  bat         # モダンなcat
+  eza         # モダンなls
+  fd          # モダンなfind
+  git-delta   # モダンなgit diff
+  ripgrep     # モダンなgrep
+  fzf         # 曖昧検索
+  zoxide      # 過去に訪れたディレクトリにzで移動
+  xclip       # クリップボード共有用
+)
 # 既にインストール済みの場合はスキップされる
-brew install fish gh neovim bat eza fd git-delta ripgrep fzf zoxide
+brew install "${CORE_TOOLS[@]}"
 
 # === 4. GitHub認証 & SSH設定 ===
 if ! gh auth status &> /dev/null; then
