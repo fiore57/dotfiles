@@ -21,23 +21,29 @@ fi
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # === 3. Brewツールの一括インストール ===
+# コマンドが存在しないならインストールする関数
+install_if_missing() {
+  local command_name=$1
+  local package_ame=${2:-$1} # 2番目の引数がなければ1番目と同じとみなす
+
+  if ! command -v "$command_name" &> /dev/null; then
+    echo "ℹ️ Installing $package_name..."
+    brew install $package_name
+  fi
+}
+
 echo "ℹ️ Installing CLI tools via Brew..."
-# インストールするツールのリスト
-CORE_TOOLS=(
-  fish        # シェル
-  neovim      # エディタ
-  gh          # GitHub CLI
-  bat         # モダンなcat
-  eza         # モダンなls
-  fd          # モダンなfind
-  git-delta   # モダンなgit diff
-  ripgrep     # モダンなgrep
-  fzf         # 曖昧検索
-  zoxide      # 過去に訪れたディレクトリにzで移動
-  xclip       # クリップボード共有用
-)
-# 既にインストール済みの場合はスキップされる
-brew install "${CORE_TOOLS[@]}"
+install_if_missing "fish"               # シェル
+install_if_missing "nvim" "neovim"      # エディタ
+install_if_missing "gh"                 # GitHub CLI
+install_if_missing "bat"                # モダンなcat
+install_if_missing "eza"                # モダンなls
+install_if_missing "fd"                 # モダンなfind
+install_if_missing "delta" "git-delta"  # モダンなgit diff
+install_if_missing "rg" "ripgrep"       # モダンなgrep
+install_if_missing "fzf"                # 曖昧検索
+install_if_missing "zoxide"             # 過去に訪れたディレクトリにzで移動
+install_if_missing "xclip"              # クリップボード共有用
 
 # === 4. GitHub認証 & SSH設定 ===
 if ! gh auth status &> /dev/null; then
