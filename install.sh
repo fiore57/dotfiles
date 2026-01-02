@@ -59,20 +59,41 @@ if [[ $current_url == https://github.com/* ]]; then
 fi
 
 # === 5. 設定ファイルのリンク作成 ===
-echo "ℹ️ Creating symlinks..."
-# configディレクトリ配下をまとめて ~/.config/ へ
-mkdir -p "$HOME/.config"
-for path in "$DOTFILES_DIR/config/"*; do
-  name=$(basename "$path")
-  target="$HOME/.config/$name"
-  # 既存の実体ディレクトリがあればバックアップ
-  if [ -d "$target" ] && [ ! -L "$target" ]; then
-    echo "⚠️  Moving existing $name to $target.bak"
-    mv "$target" "$target.bak"
+# 安全にリンクを貼るための関数
+deploy_link() {
+  local src=$1    # dotfiles側のパス
+  local dst=$2    # ホームディレクトリ側のパス
+
+  # 1. すでに実体がある場合はバックアップ
+  if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+    echo "⚠️  Backing up existing $dst to $dst.bak"
+    mv "$dst" "$dst.bak"
   fi
-  # シンボリックリンクを貼る
-  ln -sfn "$path" "$target"
+
+  # 2. 親ディレクトリを作成
+  mkdir -p "$(dirname "$dst")"
+
+  # 3. シンボリックリンクを貼る
+  ln -sfn "$src" "$dst"
+}
+
+# シンボリックリンクを貼る
+echo "ℹ️ Creating symlinks..."
+
+# ~/.config配下の処理
+for path in "$DOTFILES_DIR/config/"*; do
+  [ -e "$path" ] || continue # ファイルが存在しない場合のガード
+  name=$(basename "$path")
+
+  # 例外：gitディレクトリは~/.gitconfigとして貼る
+  [ "$name" == "git" ] && continue
+
+  deploy_link "$path" "$HOME/.config/$name"
 done
+
+# 例外的なファイル（ホーム直下）の処理
+deploy_link "$DOTFILES_DIR/config/git/config" "$HOME/.gitconfig"
+
 
 # === 6. Fishシェルのセットアップ ===
 if [[ "$SHELL" != *"fish"* ]]; then

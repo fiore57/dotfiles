@@ -1,0 +1,29 @@
+[user]
+  name = fiore57
+  email = fiore57.cpp@gmail.com
+[core]
+  editor = nvim
+  pager = delta
+  quotepath = false
+[init]
+  defaultBranch = main
+[alias]
+  alias = !git config --global --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\t => \\2/' | sort
+  l = lo -10
+  lo = log --graph --date=short --pretty=format:\"%C(yellow)%h %C(white)%s %C(green)%d %C(blue) %cr\"
+  lol = log --graph --date=short --pretty=format:\"%C(yellow)%h %C(white)%s %C(green)%d %C(red)%cn %C(blue)%cd - %cr\" --all
+[push]
+  default = simple
+[pull]
+  ff = only
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  line-numbers = true
+  navigate = true
+  side-by-side = true
+  hyperlinks = true
+[merge]
+  conflictstyle = zdiff3
+[diff]
+  colorMoved = default
