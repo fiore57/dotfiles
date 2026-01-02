@@ -15,6 +15,16 @@ return {
     },
   },
   {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { { "nvim-mini/mini.icons", opts = {} } },
+    opts = {
+      options = {
+        theme = "tokyonight",
+        globalstatus = true,
+      },
+    },
+  },
+  {
     "vim-jp/vimdoc-ja",
     config = function()
       vim.opt.helplang = "ja,en"
