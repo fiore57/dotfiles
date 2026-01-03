@@ -24,7 +24,7 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # コマンドが存在しないならインストールする関数
 install_if_missing() {
   local command_name=$1
-  local package_ame=${2:-$1} # 2番目の引数がなければ1番目と同じとみなす
+  local package_name=${2:-$1} # 2番目の引数がなければ1番目と同じとみなす
 
   if ! command -v "$command_name" &> /dev/null; then
     echo "ℹ️ Installing $package_name..."
