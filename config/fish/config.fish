@@ -11,6 +11,9 @@ end
 if status is-interactive
 # Commands to run in interactive sessions can go here
 
+# Starshipの初期化
+starship init fish | source
+
 # 設定の再読み込み
 abbr -a reload 'source ~/.config/fish/config.fish'
 

@@ -44,6 +44,7 @@ install_if_missing "rg" "ripgrep"       # モダンなgrep
 install_if_missing "fzf"                # 曖昧検索
 install_if_missing "zoxide"             # 過去に訪れたディレクトリにzで移動
 install_if_missing "xclip"              # クリップボード共有用
+install_if_missing "starship"           # fishのカスタマイズ
 
 # === 4. GitHub認証 & SSH設定 ===
 if ! gh auth status &> /dev/null; then
