@@ -26,6 +26,9 @@ return {
   },
   {
     "vim-jp/vimdoc-ja",
+    keys = {
+      { "h", mode = "c" },
+    },
     config = function()
       vim.opt.helplang = "ja,en"
     end
