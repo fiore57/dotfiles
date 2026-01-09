@@ -6,6 +6,12 @@ set -ueo pipefail
 # スクリプト自身のディレクトリを絶対パスで取得
 DOTFILES_DIR=$(cd "$(dirname "$0")"; pwd)
 
+# Dockerビルド中かどうか
+IS_DOCKER=false
+if [ -f /.dockerenv ] || [ "${CI:-}" = "true" ]; then
+  IS_DOCKER=true
+fi
+
 echo "ℹ️ Starting dotfiles setup..."
 
 # === 1. 基本ツールのインストール（apt） ===
@@ -47,22 +53,28 @@ install_if_missing "xclip"              # クリップボード共有用
 install_if_missing "starship"           # fishのカスタマイズ
 
 # === 4. GitHub認証 & SSH設定 ===
-if ! gh auth status &> /dev/null; then
-  echo "ℹ️ GitHub CLI login required"
-  gh auth login -s admin:public_key -s repo
-fi
-# SSH鍵がなければ生成してGitHubに登録
-if [ ! -f "$HOME/.ssh/id_ed25519" ]; then
-    echo "ℹ️ Generating SSH key..."
-    ssh-keygen -t ed25519 -N "" -f "$HOME/.ssh/id_ed25519"
-    gh ssh-key add "$HOME/.ssh/id_ed25519.pub" --title "WSL-Ubuntu-$(date +%Y%m%d)"
-fi
-# HTTPSのリモートURLをSSH形式に書き換える
-cd "$DOTFILES_DIR"
-current_url=$(git remote get-url origin)
-if [[ $current_url == https://github.com/* ]]; then
-    new_url=$(echo $current_url | sed 's|https://github.com/|git@github.com:|')
-    git remote set-url origin "$new_url"
+if [ "$IS_DOCKER" = "true" ]; then
+  # Dockerビルド中は`gh auth login`中に応答できないのでスキップ
+  echo "ℹ️ Skipping interactive GitHub auth (Non-interactive environment)"
+else
+  # インタラクティブ環境なら`gh auth login`を実行
+  if ! gh auth status &> /dev/null; then
+    echo "ℹ️ GitHub CLI login required"
+    gh auth login -s admin:public_key -s repo
+  fi
+  # SSH鍵がなければ生成してGitHubに登録
+  if [ ! -f "$HOME/.ssh/id_ed25519" ]; then
+      echo "ℹ️ Generating SSH key..."
+      ssh-keygen -t ed25519 -N "" -f "$HOME/.ssh/id_ed25519"
+      gh ssh-key add "$HOME/.ssh/id_ed25519.pub" --title "WSL-Ubuntu-$(date +%Y%m%d)"
+  fi
+  # HTTPSのリモートURLをSSH形式に書き換える
+  cd "$DOTFILES_DIR"
+  current_url=$(git remote get-url origin)
+  if [[ $current_url == https://github.com/* ]]; then
+      new_url=$(echo $current_url | sed 's|https://github.com/|git@github.com:|')
+      git remote set-url origin "$new_url"
+  fi
 fi
 
 # === 5. 設定ファイルのリンク作成 ===

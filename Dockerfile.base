@@ -1,0 +1,28 @@
+FROM ubuntu:24.04
+ENV CI=true
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 1. install.sh が内部で使うツールだけを先に入れる
+RUN apt-get update && apt-get install -y \
+    git curl build-essential sudo \
+    && apt-get clean
+
+# 2. dotfiles を持ってきて install.sh を実行
+# WORKDIR /root
+# RUN git clone https://github.com/fiore57/dotfiles.git .dotfiles \
+    # && cd .dotfiles \
+    # && chmod +x install.sh \
+    # && ./install.sh
+
+# ローカルデバッグ用
+# 今いる場所（dotfiles直下）のファイルをすべてコンテナの /root/.dotfilesに送る
+WORKDIR /root/.dotfiles
+COPY . .
+
+# Homebrewのパスを環境変数に加える
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
+# コピーされた最新のinstall.shを実行
+RUN chmod +x install.sh && ./install.sh
+
+CMD ["/home/linuxbrew/.linuxbrew/bin/fish"]
+
