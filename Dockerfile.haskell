@@ -1,0 +1,16 @@
+FROM dev-base
+
+# Haskellツールチェーン（GHCupなど）のインストール
+# 非対話モードでHLS（Language Server）まで入れる
+ENV BOOTSTRAP_HASKELL_NONINTERACTIVE=1
+ENV BOOTSTRAP_HASKELL_INSTALL_HLS=1
+ENV BOOTSTRAP_HASKELL_INSTALL_STACK=1
+ENV BOOTSTRAP_HASKELL_GHC_VERSION=latest
+ENV PATH="/root/.ghcup/bin:${PATH}"
+
+# GHCupのインストール
+RUN curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+
+# 作業ディレクトリの設定
+WORKDIR /workspace
+CMD ["/home/linuxbrew/.linuxbrew/bin/fish"]
