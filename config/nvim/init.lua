@@ -108,6 +108,5 @@ require("lazy").setup({
     -- lua/plugins/ ディレクトリ内のファイルを全て読み込む
     { import = "plugins" },
   },
-  checker = { enabled = true },
 })
 
