@@ -38,19 +38,32 @@ install_if_missing() {
   fi
 }
 
+# hostの場合のみ必要なツールをインストールする
+install_host_tools() {
+  install_if_missing "tmux"
+  install_if_missing "xclip"            # クリップボード共有用
+}
+
+# dockerでも必要なツールをインストールする
+install_common_tools() {
+  install_if_missing "fish"
+  install_if_missing "nvim" "neovim"
+  install_if_missing "gh"                 # GitHub CLI
+  install_if_missing "bat"                # モダンなcat
+  install_if_missing "eza"                # モダンなls
+  install_if_missing "fd"                 # モダンなfind
+  install_if_missing "delta" "git-delta"  # モダンなgit diff
+  install_if_missing "rg" "ripgrep"       # モダンなgrep
+  install_if_missing "fzf"                # 曖昧検索
+  install_if_missing "zoxide"             # 過去に訪れたディレクトリにzで移動
+  install_if_missing "starship"           # fishのカスタマイズ
+}
+
 echo "ℹ️ Installing CLI tools via Brew..."
-install_if_missing "fish"               # シェル
-install_if_missing "nvim" "neovim"      # エディタ
-install_if_missing "gh"                 # GitHub CLI
-install_if_missing "bat"                # モダンなcat
-install_if_missing "eza"                # モダンなls
-install_if_missing "fd"                 # モダンなfind
-install_if_missing "delta" "git-delta"  # モダンなgit diff
-install_if_missing "rg" "ripgrep"       # モダンなgrep
-install_if_missing "fzf"                # 曖昧検索
-install_if_missing "zoxide"             # 過去に訪れたディレクトリにzで移動
-install_if_missing "xclip"              # クリップボード共有用
-install_if_missing "starship"           # fishのカスタマイズ
+install_common_tools
+if [ "$IS_DOCKER" != "true" ]; then
+  install_host_tools
+fi
 
 # === 4. GitHub認証 & SSH設定 ===
 if [ "$IS_DOCKER" = "true" ]; then

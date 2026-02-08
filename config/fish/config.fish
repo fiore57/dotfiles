@@ -41,6 +41,9 @@ abbr -a gss git status --short --branch
 abbr -a gw git switch
 abbr -a gwc git switch -c
 abbr -a gwb git branch -
+# tmux
+abbr -a t tmux
+abbr -a ta 'tmux attach || tmux new'
 
 end
 
