@@ -6,12 +6,6 @@ set -ueo pipefail
 # スクリプト自身のディレクトリを絶対パスで取得
 DOTFILES_DIR=$(cd "$(dirname "$0")"; pwd)
 
-# Dockerビルド中かどうか
-IS_DOCKER=false
-if [ -f /.dockerenv ] || [ "${CI:-}" = "true" ]; then
-  IS_DOCKER=true
-fi
-
 echo "ℹ️ Starting dotfiles setup..."
 
 # === 1. 基本ツールのインストール（apt） ===
@@ -40,7 +34,6 @@ install_if_missing() {
 
 # hostの場合のみ必要なツールをインストールする
 install_host_tools() {
-  install_if_missing "tmux"
   install_if_missing "xclip"            # クリップボード共有用
 }
 
@@ -48,6 +41,7 @@ install_host_tools() {
 install_common_tools() {
   install_if_missing "fish"
   install_if_missing "nvim" "neovim"
+  install_if_missing "tmux"
   install_if_missing "gh"                 # GitHub CLI
   install_if_missing "bat"                # モダンなcat
   install_if_missing "eza"                # モダンなls
@@ -61,12 +55,12 @@ install_common_tools() {
 
 echo "ℹ️ Installing CLI tools via Brew..."
 install_common_tools
-if [ "$IS_DOCKER" != "true" ]; then
+if [ "${DOCKER_BUILD:-false}" = "false" ]; then
   install_host_tools
 fi
 
 # === 4. GitHub認証 & SSH設定 ===
-if [ "$IS_DOCKER" = "true" ]; then
+if [ "${DOCKER_BUILD:-false}" = "true" ]; then
   # Dockerビルド中は`gh auth login`中に応答できないのでスキップ
   echo "ℹ️ Skipping interactive GitHub auth (Non-interactive environment)"
 else

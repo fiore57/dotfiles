@@ -1,5 +1,5 @@
 FROM ubuntu:24.04
-ENV CI=true
+ENV DOCKER_BUILD=true
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install.sh が内部で使うツールを入れる
