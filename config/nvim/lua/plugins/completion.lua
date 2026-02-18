@@ -2,11 +2,16 @@ return {
   {
     "saghen/blink.cmp",
     version = "*", -- 最新の安定版を使用
-    event = "InsertEnter",
+    event = { "InsertEnter", "CmdLineEnter" },
     opts = {
       -- キーマップ
-      -- デフォルト場合、C-Spaceで補完開始、Enterで決定、上下で候補選択
-      keymap = { preset = "default" },
+      -- <C-Space>：補完開始
+      -- <C-e>：隠す
+      -- <CR>：決定
+      -- <Up><Down>or<C-p><C-n>：候補選択
+      -- <C-b><C-f>：ドキュメントをスクロール
+      -- <C-k>：signature help window（関数呼び出し時に表示される情報）の表示/非表示を切り替え
+      keymap = { preset = "enter" },
       -- 補完ソース
       sources = {
         default = { "lsp", "path", "snippets", "buffer" },
