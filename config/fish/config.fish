@@ -44,6 +44,8 @@ abbr -a gwb git branch -
 # tmux
 abbr -a t tmux
 abbr -a ta 'tmux attach || tmux new'
+# docker
+abbr -a haskell-dev 'docker run -it --rm -v "$HOME/dotfiles:/root/.dotfiles" -v "$HOME/workspace/haskell:/workspace" haskell-dev'
 
 end
 
