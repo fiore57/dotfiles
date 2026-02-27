@@ -17,7 +17,7 @@ $apps = @(
   "voidtools.Everything",
   "Amazon.Kindle",
   "Logitech.GHUB",
-  "Docker.DockerDesktop",
+  "Docker.DockerDesktop"
 )
 
 foreach ($app in $apps) {
