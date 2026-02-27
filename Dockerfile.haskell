@@ -18,4 +18,4 @@ RUN ghcup set ghc 9.12.2 && ghcup set hls latest
 
 # 作業ディレクトリの設定
 WORKDIR /workspace
-CMD ["/home/linuxbrew/.linuxbrew/bin/fish"]
+CMD ["fish"]

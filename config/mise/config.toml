@@ -1,0 +1,11 @@
+[tools]
+neovim = "latest"     # nvim
+tmux = "latest"
+bat = "latest"        # モダンなcat
+eza = "latest"        # モダンなls
+fd = "latest"         # モダンなfind
+delta = "latest"      # モダンなgit diff
+ripgrep = "latest"    # rg, モダンなgrep
+fzf = "latest"        # 曖昧検索
+zoxide = "latest"     # 過去に訪れたディレクトリにzで移動
+starship = "latest"   # fishのカスタマイズ

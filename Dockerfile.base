@@ -11,13 +11,12 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /root/.dotfiles
 COPY . .
 
-# Homebrewのパスを環境変数に加える
-ENV PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
 # コピーされたinstall.shを実行
 RUN chmod +x install.sh && ./install.sh
 
 # Neovimをヘッドレス（画面なし）で起動し、プラグインをインストールして終了
-RUN nvim --headless "+Lazy! sync" +qa
+RUN /root/.local/bin/mise exec -- nvim --headless "+Lazy! sync" +qa
 
-CMD ["/home/linuxbrew/.linuxbrew/bin/fish"]
+# docker run時にデフォルトで実行されるコマンド
+CMD ["fish"]
 

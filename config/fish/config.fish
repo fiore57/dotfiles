@@ -1,18 +1,23 @@
 # --- 全モード共通の設定（PATHなど） ---
-if test -d /home/linuxbrew/.linuxbrew/bin
-  eval (/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+
+# --- 対話モード専用の設定（見た目やエイリアスなど） ---
+if status is-interactive
+# Commands to run in interactive sessions can go here
+
+# miseのパスを通す
+set -l mise_bin ~/.local/bin/mise
+if test -x $mise_bin
+  $mise_bin activate fish | source
 end
 
 if type -q zoxide
   zoxide init fish | source
 end
 
-# --- 対話モード専用の設定（見た目やエイリアスなど） ---
-if status is-interactive
-# Commands to run in interactive sessions can go here
-
 # Starshipの初期化
-starship init fish | source
+if type -q starship
+  starship init fish | source
+end
 
 # 設定の再読み込み
 abbr -a reload 'source ~/.config/fish/config.fish'
@@ -45,6 +50,8 @@ abbr -a gwb git branch -
 abbr -a t tmux
 abbr -a ta 'tmux attach || tmux new'
 # docker
+abbr -a docker-build-dev-base 'docker build -f Dockerfile.base -t dev-base .'
+abbr -a docker-build-haskell-dev 'docker build -f Dockerfile.haskell -t haskell-dev .'
 abbr -a haskell-dev 'docker run -it --rm -v "$HOME/dotfiles:/root/.dotfiles" -v "$HOME/workspace/haskell:/workspace" haskell-dev'
 
 end

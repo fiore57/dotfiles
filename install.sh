@@ -6,100 +6,65 @@ set -ueo pipefail
 # スクリプト自身のディレクトリを絶対パスで取得
 DOTFILES_DIR=$(cd "$(dirname "$0")"; pwd)
 
-echo "ℹ️ Starting dotfiles setup..."
-
+#
 # === 1. 基本ツールのインストール（apt） ===
+#
+echo "ℹ️ Starting dotfiles setup..."
 sudo apt update
-sudo apt install -y build-essential curl git
+sudo apt install -y build-essential curl git software-properties-common
 
-# === 2. Homebrewのインストール & パス通し ===
-if ! command -v brew &> /dev/null; then
-  echo "ℹ️ Installing Homebrew..."
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#
+# === 2. miseのインストール ===
+#
+if ! command -v mise &> /dev/null; then
+  echo "ℹ️ Installing mise..."
+  curl -fsSL https://mise.run | sh
+  # 一時的にパスを通す（mise activateすれば自動でパスを通してくれるが、install.shの中では~/.local/bin/miseが見えないため）
+  export PATH="$HOME/.local/bin:$PATH"
 fi
-# このセッションで直ちにbrewを使えるようにする（再起動不要）
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# === 3. Brewツールの一括インストール ===
-# コマンドが存在しないならインストールする関数
-install_if_missing() {
-  local command_name=$1
-  local package_name=${2:-$1} # 2番目の引数がなければ1番目と同じとみなす
+#
+# === 3. ツールのインストール ===
+#
+echo "ℹ️ Installing CLI tools via mise..."
 
-  if ! command -v "$command_name" &> /dev/null; then
-    echo "ℹ️ Installing $package_name..."
-    brew install $package_name
-  fi
-}
-
-# hostの場合のみ必要なツールをインストールする
-install_host_tools() {
-  install_if_missing "xclip"            # クリップボード共有用
-}
+# fishをインストールする（miseでインストールできない）
+echo "ℹ️ Installing fish..."
+sudo apt-add-repository ppa:fish-shell/release-4
+sudo apt update
+sudo apt install -y fish
 
 # dockerでも必要なツールをインストールする
-install_common_tools() {
-  install_if_missing "fish"
-  install_if_missing "nvim" "neovim"
-  install_if_missing "tmux"
-  install_if_missing "gh"                 # GitHub CLI
-  install_if_missing "bat"                # モダンなcat
-  install_if_missing "eza"                # モダンなls
-  install_if_missing "fd"                 # モダンなfind
-  install_if_missing "delta" "git-delta"  # モダンなgit diff
-  install_if_missing "rg" "ripgrep"       # モダンなgrep
-  install_if_missing "fzf"                # 曖昧検索
-  install_if_missing "zoxide"             # 過去に訪れたディレクトリにzで移動
-  install_if_missing "starship"           # fishのカスタマイズ
-}
-
-echo "ℹ️ Installing CLI tools via Brew..."
-install_common_tools
+echo "ℹ️ Installing common tools..."
+# $DOTFILES_DIR/config/mise/config.toml に列挙されているツールをインストールする
+mise trust
+mise install
+# DOCKER_BUILD=trueならホスト専用ツールをスキップ
 if [ "${DOCKER_BUILD:-false}" = "false" ]; then
-  install_host_tools
+  # hostの場合のみ必要なツールをインストールする
+  echo "ℹ️ Installing host_only tools..."
+  sudo apt install -y xclip             # クリップボード共有用
 fi
 
-# === 4. GitHub認証 & SSH設定 ===
-if [ "${DOCKER_BUILD:-false}" = "true" ]; then
-  # Dockerビルド中は`gh auth login`中に応答できないのでスキップ
-  echo "ℹ️ Skipping interactive GitHub auth (Non-interactive environment)"
-else
-  # インタラクティブ環境なら`gh auth login`を実行
-  if ! gh auth status &> /dev/null; then
-    echo "ℹ️ GitHub CLI login required"
-    gh auth login -s admin:public_key -s repo
-  fi
-  # SSH鍵がなければ生成してGitHubに登録
-  if [ ! -f "$HOME/.ssh/id_ed25519" ]; then
-      echo "ℹ️ Generating SSH key..."
-      ssh-keygen -t ed25519 -N "" -f "$HOME/.ssh/id_ed25519"
-      gh ssh-key add "$HOME/.ssh/id_ed25519.pub" --title "WSL-Ubuntu-$(date +%Y%m%d)"
-  fi
-  # HTTPSのリモートURLをSSH形式に書き換える
-  cd "$DOTFILES_DIR"
-  current_url=$(git remote get-url origin)
-  if [[ $current_url == https://github.com/* ]]; then
-      new_url=$(echo $current_url | sed 's|https://github.com/|git@github.com:|')
-      git remote set-url origin "$new_url"
-  fi
-fi
+#
+# === 4. 設定ファイルのリンク作成 ===
+#
 
-# === 5. 設定ファイルのリンク作成 ===
 # 安全にリンクを貼るための関数
 deploy_link() {
   local src=$1    # dotfiles側のパス
   local dst=$2    # ホームディレクトリ側のパス
 
-  # 1. すでに実体がある場合はバックアップ
+  # すでに実体がある場合はバックアップ
   if [ -e "$dst" ] && [ ! -L "$dst" ]; then
     echo "⚠️  Backing up existing $dst to $dst.bak"
     mv "$dst" "$dst.bak"
   fi
 
-  # 2. 親ディレクトリを作成
+  # 親ディレクトリを作成
   mkdir -p "$(dirname "$dst")"
 
-  # 3. シンボリックリンクを貼る
+  # シンボリックリンクを貼る
   ln -sfn "$src" "$dst"
 }
 
@@ -120,8 +85,9 @@ done
 # 例外的なファイル（ホーム直下）の処理
 deploy_link "$DOTFILES_DIR/config/git/config" "$HOME/.gitconfig"
 
-
-# === 6. Fishシェルのセットアップ ===
+#
+# === 5. Fishシェルのセットアップ ===
+#
 if [[ "$SHELL" != *"fish"* ]]; then
     echo "ℹ️ Switching default shell to fish..."
     if ! grep -q "$(which fish)" /etc/shells; then
