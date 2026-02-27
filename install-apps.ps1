@@ -9,6 +9,7 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 $apps = @(
   "nathancorvussolis.corvusskk",
   "Vivaldi.Vivaldi",
+  "Logitech.GHUB",
   "Notion.Notion",
   "Notion.NotionCalendar",
   "Microsoft.WindowsTerminal",
@@ -16,8 +17,8 @@ $apps = @(
   "DevToys-app.DevToys",
   "voidtools.Everything",
   "Amazon.Kindle",
-  "Logitech.GHUB",
-  "Docker.DockerDesktop"
+  "Docker.DockerDesktop",
+  "Microsoft.PowerShell"
 )
 
 foreach ($app in $apps) {

@@ -1,5 +1,7 @@
 # 手順
 
+## Linux(WSL)
+
 ```bash
 git clone https://github.com/fiore57/dotfiles.git
 cd dotfiles
@@ -20,4 +22,10 @@ cd dotfiles
 "opacity": 85,
 "padding": "10",
 "scrollbarState": "hidden",
+```
+
+## Windows
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex (irm "https://raw.githubusercontent.com/fiore57/dotfiles/main/install-apps.ps1")
 ```
