@@ -29,3 +29,6 @@ cd dotfiles
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex (irm "https://raw.githubusercontent.com/fiore57/dotfiles/main/install-apps.ps1")
 ```
+
+1. https://github.com/yuru7/HackGen/releases から `HackGen_NF_v*.zip` をダウンロードする
+2. 展開し、 `HackGenConsoleNF-Regular.ttf` と `HackGenConsoleNF-Bold.ttf` を右クリック→インストールする
