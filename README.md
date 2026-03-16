@@ -8,6 +8,16 @@ cd dotfiles
 ./install.sh
 ```
 
+`mise trust`しろと言われたら、以下を実行
+
+```bash
+cd config/mise
+mise trust
+mise install
+```
+
+### Windows Terminalの設定
+
 1. Windows Terminalの設定を開く
 2. 左のメニューの一番下「JSONファイルを開く」からsettings.jsonを開く
 3. 該当のプロファイルに以下を追記する
