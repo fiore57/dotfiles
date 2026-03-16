@@ -16,7 +16,15 @@ mise trust
 mise install
 ```
 
-後で `gh auth login` しておくこと
+ghのセットアップ
+
+```bash
+gh auth login
+gh auth setup-git
+git update-index --assume-unchanged config/git/config
+```
+
+これによってconfig/git/configを更新しても `git status` で表示されないため、戻したいときは `git update-index --no-assume-unchanged config/git/config` とする必要がある点に注意
 
 ### Windows Terminalの設定
 
