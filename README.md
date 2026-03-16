@@ -16,6 +16,8 @@ mise trust
 mise install
 ```
 
+後で `gh auth login` しておくこと
+
 ### Windows Terminalの設定
 
 1. Windows Terminalの設定を開く

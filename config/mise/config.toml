@@ -1,6 +1,7 @@
 [tools]
 neovim = "latest"     # nvim
 tmux = "latest"
+gh = "latest"
 bat = "latest"        # モダンなcat
 eza = "latest"        # モダンなls
 fd = "latest"         # モダンなfind
