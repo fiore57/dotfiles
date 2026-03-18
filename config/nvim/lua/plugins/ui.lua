@@ -30,4 +30,8 @@ return {
 			vim.opt.helplang = "ja,en"
 		end,
 	},
+	{
+		"lewis6991/gitsigns.nvim",
+		opts = {},
+	},
 }
