@@ -8,13 +8,29 @@ ENV BOOTSTRAP_HASKELL_INSTALL_STACK=1
 # latestだとHLSが存在しないため、安定版をインストール
 ENV BOOTSTRAP_HASKELL_GHC_VERSION=9.12.2 
 ENV BOOTSTRAP_HASKELL_ADJUST_CABAL_CONFIG=1
-# GHCupのインストール先
-ENV PATH="/root/.ghcup/bin:${PATH}"
+# GHCup,cabalのインストール先
+ENV PATH="/root/.ghcup/bin:/root/.cabal/bin:${PATH}"
 
 # GHCupのインストール
 RUN curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 
 RUN ghcup set ghc 9.12.2 && ghcup set hls latest
+
+# ロケール
+RUN apt-get update && apt-get install -y locales \
+    && locale-gen en_US.UTF-8
+
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
+
+# formatter
+RUN apt-get update && apt-get install -y \
+    libgmp-dev \
+    libffi-dev \
+    libnuma-dev \
+    zlib1g-dev
+RUN cabal update && cabal install ormolu
 
 # 作業ディレクトリの設定
 WORKDIR /workspace

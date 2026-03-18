@@ -1,28 +1,21 @@
 return {
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      { "mason-org/mason.nvim", opts = {} },
-      "mason-org/mason-lspconfig.nvim",
-    },
-    config = function()
-      require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls" },
-      })
-      vim.lsp.enable("lua_ls")
-      vim.lsp.config["hls"] = {
-        install = {
-          cmd = { "haskell-language-server-wrapper", "--lsp" },
-        },
-        -- どのファイルがあったらプロジェクトとみなすか
-        root_markers =  { "cabal.project", "stack.yaml", "package.yaml", ".git" },
-        settings = {
-          haskell = {
-            formattingProvider = "ormolu",
-          }
-        }
-      }
-      vim.lsp.enable("hls")
-    end,
-  }
+	{
+		"mason-org/mason-lspconfig.nvim",
+		dependencies = {
+			{ "mason-org/mason.nvim", opts = {} }, -- setup()のためにopts = {}とする
+			"neovim/nvim-lspconfig",
+		},
+		opts = {
+			ensure_installed = {
+				-- デフォルトでautomatic_enable = true
+				-- vim.lsp.enable()は不要
+				"lua_ls",
+				"stylua",
+			},
+		},
+		config = function(_, opts)
+			require("mason-lspconfig").setup(opts)
+			vim.lsp.enable("hls") -- ghcup管理であるため、必要
+		end,
+	},
 }

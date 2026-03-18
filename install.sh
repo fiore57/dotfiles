@@ -10,8 +10,8 @@ DOTFILES_DIR=$(cd "$(dirname "$0")"; pwd)
 # === 1. 基本ツールのインストール（apt） ===
 #
 echo "ℹ️ Starting dotfiles setup..."
-sudo apt update
-sudo apt install -y build-essential curl git software-properties-common
+sudo apt-get update
+sudo apt-get install -y build-essential curl git software-properties-common unzip
 
 #
 # === 2. miseのインストール ===
@@ -30,9 +30,9 @@ echo "ℹ️ Installing CLI tools via mise..."
 
 # fishをインストールする（miseでインストールできない）
 echo "ℹ️ Installing fish..."
-sudo apt-add-repository ppa:fish-shell/release-4
-sudo apt update
-sudo apt install -y fish
+sudo apt-add-repository -y ppa:fish-shell/release-4
+sudo apt-get update
+sudo apt-get install -y fish
 
 # dockerでも必要なツールをインストールする
 echo "ℹ️ Installing common tools..."
@@ -43,7 +43,7 @@ mise install
 if [ "${DOCKER_BUILD:-false}" = "false" ]; then
   # hostの場合のみ必要なツールをインストールする
   echo "ℹ️ Installing host_only tools..."
-  sudo apt install -y xclip             # クリップボード共有用
+  sudo apt-get install -y xclip             # クリップボード共有用
 fi
 
 #
