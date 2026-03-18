@@ -19,6 +19,7 @@
 [interactive]
   diffFilter = delta --color-only
 [delta]
+  tabs = 2
   line-numbers = true
   navigate = true
   side-by-side = true
