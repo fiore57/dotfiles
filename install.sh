@@ -102,4 +102,16 @@ fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/fun
 fish -c "fisher install PatrickF1/fzf.fish"
 fish -c "fisher install jorgebucaran/autopair.fish"
 
+#
+# === 6. Rustのセットアップ
+#
+if ! command -v cargo &> /dev/null; then
+  echo "ℹ️ Installing rust..."
+  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+  source "$HOME/.cargo/env"
+fi
+# tldrのインストール
+cargo install tealdeer
+tldr --update
+
 echo "ℹ️ All done! Please restart your terminal."
