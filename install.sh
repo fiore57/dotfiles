@@ -96,4 +96,10 @@ if [[ "$SHELL" != *"fish"* ]]; then
     chsh -s "$(which fish)"
 fi
 
+# fisher本体のインストール
+fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+# fishプラグインのインストール
+fish -c "fisher install PatrickF1/fzf.fish"
+fish -c "fisher install jorgebucaran/autopair.fish"
+
 echo "ℹ️ All done! Please restart your terminal."
