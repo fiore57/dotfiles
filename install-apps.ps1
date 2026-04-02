@@ -12,7 +12,7 @@ $apps = @(
   "Logitech.GHUB",
   "Notion.Notion",
   "Notion.NotionCalendar",
-  "Microsoft.WindowsTerminal",
+  "Obsidian.Obsidian",
   "Microsoft.PowerToys",
   "DevToys-app.DevToys",
   "voidtools.Everything",
