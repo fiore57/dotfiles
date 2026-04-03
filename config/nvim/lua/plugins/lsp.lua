@@ -16,6 +16,7 @@ return {
 		config = function(_, opts)
 			require("mason-lspconfig").setup(opts)
 			vim.lsp.enable("hls") -- ghcup管理であるため、必要
+			vim.lsp.enable("rust_analyzer")
 		end,
 	},
 }

@@ -46,6 +46,21 @@ if [ "${DOCKER_BUILD:-false}" = "false" ]; then
   sudo apt-get install -y xclip             # クリップボード共有用
 fi
 
+# Rustのインストール
+echo "ℹ️ Installing Rust..."
+if ! command -v cargo &> /dev/null; then
+  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+  source "$HOME/.cargo/env"
+fi
+# LSP・フォーマッタ・リンタ
+rustup component add rust-analyzer rustfmt clippy
+
+# tldrのインストール
+if ! command -v tldr &> /dev/null; then
+  cargo install tealdeer
+  tldr --update
+fi
+
 #
 # === 4. 設定ファイルのリンク作成 ===
 #
@@ -102,16 +117,5 @@ fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/fun
 fish -c "fisher install PatrickF1/fzf.fish"
 fish -c "fisher install jorgebucaran/autopair.fish"
 
-#
-# === 6. Rustのセットアップ
-#
-if ! command -v cargo &> /dev/null; then
-  echo "ℹ️ Installing rust..."
-  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
-  source "$HOME/.cargo/env"
-fi
-# tldrのインストール
-cargo install tealdeer
-tldr --update
 
 echo "ℹ️ All done! Please restart your terminal."
