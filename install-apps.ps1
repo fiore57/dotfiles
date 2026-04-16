@@ -13,6 +13,7 @@ $apps = @(
   "Notion.Notion",
   "Notion.NotionCalendar",
   "Obsidian.Obsidian",
+  "Git.Git",
   "Microsoft.PowerToys",
   "DevToys-app.DevToys",
   "voidtools.Everything",
