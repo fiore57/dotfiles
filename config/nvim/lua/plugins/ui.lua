@@ -4,7 +4,7 @@ return {
 		lazy = false, -- 起動時に読み込む必要がある
 		priority = 1000, -- 他のプラグインより先に読み込む
 		init = function()
-			vim.cmd.colorscheme("tokyonight-night")
+			vim.cmd.colorscheme("tokyonight-storm")
 		end,
 		opts = {
 			transparent = true,
