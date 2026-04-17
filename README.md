@@ -39,7 +39,7 @@ git update-index --assume-unchanged config/git/config
     "face": "HackGen Console NF",
     "size": 11
 },
-"opacity": 70,
+"opacity": 80,
 "padding": "10",
 "scrollbarState": "hidden",
 ```
