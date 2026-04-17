@@ -31,6 +31,45 @@ return {
 		end,
 	},
 	{
+		"nvim-mini/mini.clue",
+		opts = function()
+			local miniclue = require("mini.clue")
+			return {
+				triggers = {
+					-- square_brackets
+					{ mode = "n", keys = "[" },
+					{ mode = "n", keys = "]" },
+					-- Built-in completion
+					{ mode = { "i" }, keys = "<C-x>" },
+					-- g
+					{ mode = { "n", "x" }, keys = "g" },
+					-- marks
+					{ mode = { "n", "x" }, keys = "'" },
+					{ mode = { "n", "x" }, keys = "`" },
+					-- registers
+					{ mode = { "n", "x" }, keys = '"' },
+					-- windows
+					{ mode = "n", keys = "<C-w>" },
+					-- z
+					{ mode = { "n", "x" }, keys = "z" },
+					-- leader
+					{ mode = { "n", "x" }, keys = "<Leader>" },
+					-- mini.surround
+					{ mode = { "n", "x" }, keys = "s" },
+				},
+				clues = {
+					miniclue.gen_clues.square_brackets(),
+					miniclue.gen_clues.builtin_completion(),
+					miniclue.gen_clues.g(),
+					miniclue.gen_clues.marks(),
+					miniclue.gen_clues.registers({ show_contents = true }),
+					miniclue.gen_clues.windows({ submode_resize = true, submode_move = true }),
+					miniclue.gen_clues.z(),
+				},
+			}
+		end,
+	},
+	{
 		"lewis6991/gitsigns.nvim",
 		opts = {},
 	},

@@ -7,7 +7,7 @@ return {
 	},
 	keys = {
 		{ "<Leader>ff", "<cmd>Telescope find_files<CR>", desc = "ファイルを検索" },
-		{ "<Leader>fg", "<cmd>Telescope live_grep<CR>", desc = "ファイル内検索" },
+		{ "<Leader>fg", "<cmd>Telescope live_grep<CR>", desc = "全ファイルをgrep" },
 		{ "<Leader>fb", "<cmd>Telescope buffers<CR>", desc = "バッファ検索" },
 		{ "<Leader>fh", "<cmd>Telescope help_tags<CR>", desc = "ヘルプ検索" },
 	},
