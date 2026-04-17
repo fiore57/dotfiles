@@ -11,6 +11,7 @@ return {
 				-- vim.lsp.enable()は不要
 				"lua_ls",
 				"stylua",
+				"taplo",
 			},
 		},
 		config = function(_, opts)
