@@ -42,4 +42,5 @@ opt.winblend = 10 -- プラグインが表示するフローティングウィ�
 vim.diagnostic.config({
 	virtual_text = true, -- 行末にエラーメッセージを表示
 	severity_sort = true, -- 重大なエラーを優先表示
+	float = { border = "rounded" },
 })

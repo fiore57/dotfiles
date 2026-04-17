@@ -33,13 +33,12 @@ git update-index --assume-unchanged config/git/config
 3. 該当のプロファイルに以下を追記する
 
 ```json
-"colorScheme": "Dark+",
+"colorScheme": "One Half Dark",
 "font":
 {
     "face": "HackGen Console NF",
     "size": 11
 },
-"opacity": 80,
 "padding": "10",
 "scrollbarState": "hidden",
 ```

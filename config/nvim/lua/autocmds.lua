@@ -32,3 +32,30 @@ create_autocmd("TextYankPost", {
 	end,
 	desc = "ヤンクした部分を光らせる",
 })
+
+create_autocmd("CursorHold", {
+	pattern = "*",
+	callback = function()
+		vim.diagnostic.open_float(nil, { focus = false })
+	end,
+	desc = "カーソルを合わせたら診断（Diagnostic）を表示",
+})
+create_autocmd("LspAttach", {
+	pattern = "*",
+	callback = function(args)
+		local opts = { buffer = args.buf, silent = true }
+		vim.keymap.set(
+			"n",
+			"gd",
+			vim.lsp.buf.definition,
+			vim.tbl_extend("force", opts, { desc = "定義ジャンプ" })
+		)
+		vim.keymap.set(
+			"n",
+			"gD",
+			vim.lsp.buf.declaration,
+			vim.tbl_extend("force", opts, { desc = "宣言ジャンプ" })
+		)
+	end,
+	desc = "LSP用キーバインドを設定",
+})
