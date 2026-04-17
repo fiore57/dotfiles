@@ -10,6 +10,7 @@ return {
 		{ "<Leader>fg", "<cmd>Telescope live_grep<CR>", desc = "全ファイルをgrep" },
 		{ "<Leader>fb", "<cmd>Telescope buffers<CR>", desc = "バッファ検索" },
 		{ "<Leader>fh", "<cmd>Telescope help_tags<CR>", desc = "ヘルプ検索" },
+		{ "<Leader>fd", "<cmd>Telescope diagnostics<CR>", desc = "診断（Diagnostics）検索" },
 	},
 	config = function(_, opts)
 		local telescope = require("telescope")
