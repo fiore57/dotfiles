@@ -22,7 +22,6 @@ return {
 		keys = {
 			{ "]b", "<cmd>BufferLineCycleNext<CR>", desc = "bufferlineの表示順で次のバッファを開く" },
 			{ "[b", "<cmd>BufferLineCyclePrev<CR>", desc = "bufferlineの表示順で前のバッファを開く" },
-			{ "<leader>b", "<cmd>bdelete<CR>", desc = "バッファを消す" },
 		},
 		opts = {
 			options = {
@@ -37,6 +36,21 @@ return {
 				},
 			},
 		},
+	},
+	{
+		"nvim-mini/mini.bufremove",
+		version = "*",
+		event = "VeryLazy",
+		keys = {
+			{
+				"<leader>bd",
+				function()
+					require("mini.bufremove").delete(0, false)
+				end,
+				desc = "バッファを消す",
+			},
+		},
+		opts = {},
 	},
 	{
 		"nvim-lualine/lualine.nvim",
