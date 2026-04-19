@@ -17,9 +17,7 @@ if type -q zoxide
 end
 
 # Starshipの初期化
-if type -q starship
-  starship init fish | source
-end
+starship init fish | source
 
 # 設定の再読み込み
 abbr -a reload 'source ~/.config/fish/config.fish'
