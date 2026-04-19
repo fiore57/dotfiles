@@ -16,15 +16,21 @@ mise trust
 mise install
 ```
 
-ghのセットアップ
+gitのセットアップ
 
 ```bash
-gh auth login
-gh auth setup-git
-git update-index --assume-unchanged config/git/config
+git remote set-url origin git@github.com:fiore57/dotfiles.git
+ssh-keygen -t ed25519 -C "fiore57.cpp@gmail.com"
+bat ~/.ssh/id_ed25519.pub
 ```
 
-これによってconfig/git/configを更新しても `git status` で表示されないため、戻したいときは `git update-index --no-assume-unchanged config/git/config` とする必要がある点に注意
+表示されたSSHキーをGithubのSettings→SSH and GPG keys→New SSH keyに貼り付け
+
+```bash
+ssh -T git@github.com
+```
+
+ユーザー名が表示されればOK
 
 ### Windows Terminalの設定
 
