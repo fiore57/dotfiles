@@ -15,6 +15,30 @@ return {
 		},
 	},
 	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = "nvim-tree/nvim-web-devicons",
+		event = "VeryLazy",
+		keys = {
+			{ "]b", "<cmd>BufferLineCycleNext<CR>", desc = "bufferlineの表示順で次のバッファを開く" },
+			{ "[b", "<cmd>BufferLineCyclePrev<CR>", desc = "bufferlineの表示順で前のバッファを開く" },
+			{ "<leader>b", "<cmd>bdelete<CR>", desc = "バッファを消す" },
+		},
+		opts = {
+			options = {
+				diagnostics = "nvim_lsp",
+				offsets = {
+					{
+						filetype = "neo-tree",
+						text = "File Explorer",
+						highlight = "Directory",
+						separator = true,
+					},
+				},
+			},
+		},
+	},
+	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons", "folke/tokyonight.nvim" },
 		opts = {

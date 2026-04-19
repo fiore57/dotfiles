@@ -22,6 +22,8 @@ starship init fish | source
 # 設定の再読み込み
 abbr -a reload 'source ~/.config/fish/config.fish'
 
+# nvim
+abbr -a nv nvim
 # eza（モダンなls）
 abbr -a l eza
 abbr -a ls eza
