@@ -2,8 +2,9 @@ return {
 	"nvim-telescope/telescope.nvim",
 	branch = "0.1.x",
 	dependencies = {
-		"nvim-lua/plenary.nvim",
+		{ "nvim-lua/plenary.nvim" },
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		{ "folke/trouble.nvim" },
 	},
 	keys = {
 		{ "<Leader>ff", "<cmd>Telescope find_files<CR>", desc = "ファイルを検索" },
@@ -26,6 +27,9 @@ return {
 				i = {
 					["<ESC>"] = function(...)
 						return require("telescope.actions").close(...)
+					end,
+					["<C-t>"] = function(...)
+						return require("trouble.sources.telescope").open(...)
 					end,
 				},
 			},
