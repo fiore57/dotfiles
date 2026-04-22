@@ -11,7 +11,6 @@ $apps = @(
   "Vivaldi.Vivaldi",
   "Logitech.GHUB",
   "Notion.Notion",
-  "Notion.NotionCalendar",
   "Obsidian.Obsidian",
   "Git.Git",
   "Microsoft.PowerToys",
