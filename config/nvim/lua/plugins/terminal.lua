@@ -40,8 +40,8 @@ return {
 				local b_opts = { buffer = 0, noremap = true, silent = true }
 				-- ターミナルモードでも <C-t> で閉じる
 				vim.keymap.set("t", "<C-t>", [[<cmd>ToggleTerm<CR>]], b_opts)
-				-- ESC でターミナルモードを抜ける
-				vim.keymap.set("t", "<ESC>", [[<cmd>ToggleTerm<CR>]], b_opts)
+				-- ESC でノーマルモードへ
+				vim.keymap.set("t", "<ESC>", [[<C-\><C-n>]], b_opts)
 				-- ウィンドウ移動
 				vim.keymap.set("t", "<C-h>", [[<cmd>wincmd h<CR>]], b_opts)
 				vim.keymap.set("t", "<C-j>", [[<cmd>wincmd j<CR>]], b_opts)
