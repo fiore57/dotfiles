@@ -39,6 +39,8 @@ opt.updatetime = 250 -- ここで指定した時間ユーザーが操作しな�
 opt.pumblend = 10 -- 補完などのポップアップメニューの透明度
 opt.winblend = 10 -- プラグインが表示するフローティングウィンドウの透明度
 
+opt.winborder = "rounded" -- 全フロートウィンドウのデフォルト枠
+
 vim.diagnostic.config({
 	virtual_text = true, -- 行末にエラーメッセージを表示
 	severity_sort = true, -- 重大なエラーを優先表示
