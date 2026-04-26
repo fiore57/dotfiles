@@ -18,7 +18,6 @@ opt.clipboard = "unnamedplus"
 opt.virtualedit = "block" -- 矩形選択で自由に移動できるようにする
 
 opt.number = true -- 行番号を表示
-opt.relativenumber = true -- 行番号の相対表示（現在の行だけ絶対表示）
 opt.cursorline = true -- 現在の行を強調表示
 opt.termguicolors = true -- 24bit RGBカラーを有効にする
 
