@@ -7,11 +7,13 @@ return {
 			-- キーマップ
 			-- <C-Space>：補完開始
 			-- <C-e>：隠す
-			-- <CR>：決定
+			-- <C-y>：決定
+			-- <Tab>：スニペットジャンプ（次へ）
+			-- <S-Tab>：スニペットジャンプ（戻る）
 			-- <Up><Down>or<C-p><C-n>：候補選択
 			-- <C-b><C-f>：ドキュメントをスクロール
 			-- <C-k>：signature help window（関数呼び出し時に表示される情報）の表示/非表示を切り替え
-			keymap = { preset = "enter" },
+			keymap = { preset = "default" },
 			-- 補完ソース
 			sources = {
 				default = { "lsp", "path", "snippets", "buffer" },
