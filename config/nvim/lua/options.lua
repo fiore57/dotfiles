@@ -4,6 +4,7 @@ vim.g.mapleader = " " -- <Leader>をスペースキーに割り当てる
 
 opt.swapfile = false -- スワップファイルを作らない
 opt.undofile = true -- neovimを一度閉じても、uで戻せる
+opt.fileencodings = "ucs-bom,utf-8,euc-jp,sjis,latin1" -- euc-jpとsjisが文字化けしないようにする
 
 opt.scrolloff = 5 -- スクロール時に上下に余白を確保する
 
