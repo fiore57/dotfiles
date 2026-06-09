@@ -10,8 +10,9 @@ return {
 				-- デフォルトでautomatic_enable = true
 				-- vim.lsp.enable()は不要
 				"lua_ls",
-				"stylua",
 				"taplo",
+				"ts_ls",
+				"eslint",
 			},
 		},
 		config = function(_, opts)
