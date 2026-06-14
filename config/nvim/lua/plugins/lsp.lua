@@ -13,10 +13,16 @@ return {
 				"taplo",
 				"ts_ls",
 				"eslint",
+				"vue_ls",
 			},
 		},
 		config = function(_, opts)
 			require("mason-lspconfig").setup(opts)
+
+			-- vue_lsにはts_lsも必要
+			vim.lsp.config("ts_ls", {
+				filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
+			})
 			vim.lsp.enable("hls") -- ghcup管理であるため、必要
 			vim.lsp.enable("rust_analyzer")
 		end,
